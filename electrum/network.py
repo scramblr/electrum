@@ -355,6 +355,8 @@ class Network(Logger, NetworkRetryManager[ServerAddr]):
             self.path_finder = lnrouter.LNPathFinder(self.channel_db)
 
     def start_gossip(self):
+        if not self.config.get('use_gossip'):
+            return
         if self.lngossip is None:
             from . import lnworker
             self.lngossip = lnworker.LNGossip()
